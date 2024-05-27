@@ -1,0 +1,108 @@
+if setup (
+  operation = ""
+  current = null
+  secondary = null
+)
+
+loc 2 2 45 -145
+x_start = x_position
+char = 0
+loop 3 (
+  loop 3 (
+    char ++
+    square 50 50 10 : c#333
+    if clicked and can (
+      can = false
+      if operation == "" "current.append(char)" else "secondary.append(char)"
+    )
+    c #fff
+    text char 20
+    change_x 50
+  )
+  set_x x_start
+  change_y -70
+)
+
+loc -2 2 -45 -145
+if operation == "+" "c #f79204" else "c #333"
+square 50 50 10 1
+c #fff
+change_x -10
+text "+" 20
+change_x -10
+if clicked "operation = +.str"
+
+change_y -70
+if operation == "-" "c #f79204" else "c #333"
+square 50 50 10 1
+c #fff
+change_x -10
+text "-" 20
+change_x -10
+if clicked "operation = -.str"
+
+change_y -70
+if operation == "*" "c #f79204" else "c #333"
+square 50 50 10 1
+c #fff
+change_x -10
+text "*" 20
+change_x -10
+if clicked "operation = *.str"
+
+change_y -70
+if operation == "*" "c #f79204" else "c #333"
+square 50 50 10 1
+c #fff
+change_x -10
+text "/" 20
+change_x -10
+if clicked "operation = /.str"
+
+set_x start_x
+change_y -70
+c #333
+square 50 50 10 1
+c #fff
+text "." 20
+change_x 70
+square 50 50 10 1
+c #fff
+text "0" 20
+if clicked and can (
+  can = false
+  if operation == "" "current.append(0)" else "secondary.append(0)"
+)
+change_x 70
+c #333
+square 50 50 10 1
+c #fff
+text "=" 20
+if clicked and can (
+  can = false
+  current.int
+  secondary.int
+  if operation == "+" "current += secondary"
+  if operation == "-" "current -= secondary"
+  if operation == "*" "current *= secondary"
+  if operation == "/" "current /= secondary"
+  current.str
+  secondary = 0
+  operation = ""
+)
+
+loc 2 2 30 -70
+if operation == "" "output = current" else "output = secondary"
+if output == null "output = 0"
+text output 20
+
+loc -2 2 -25 -70
+icon "left-arrow" 1
+if clicked and can (
+  can = False
+  temp = current.len - 1
+  temp2 = secondary.len - 1
+  if operation == "" "current.left(temp)" else "secondary.left(temp2)"
+)
+
+if mouse_down.not "can = true"
